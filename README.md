@@ -90,7 +90,7 @@ npm install http-server -g
 - Clone this repo to your desktop.
 
 ```
-https://github.com/jooherrera/Proyecto2JS.git
+https://github.com/jooherrera/CoderProject.git
 ```
 
 - Go to its root directory and run `npm start` to start the application.
