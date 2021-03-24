@@ -1,0 +1,23 @@
+@import "_navbar";
+@import "_font";
+@import "_normalize";
+@import "_home";
+@import "_modified";
+
+body {
+  background: rgba($color: #C4C4C4, $alpha: .5);
+}
+
+.bd {
+  border: 1px solid red;
+}
+
+.img-thumb {
+
+  object-fit: contain;
+}
+
+.border-custom {
+  border: 1px solid #C4C4C4;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, .2);
+}
