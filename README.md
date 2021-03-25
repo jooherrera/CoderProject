@@ -23,6 +23,7 @@ https://github.com/jooherrera/CoderProject.git
 
 :warning: To check if you have all you need installed, run this command in your terminal::warning:
 
+- Go to its root directory and run.
 
 ```
 npm run test
@@ -34,8 +35,8 @@ npm run test
 ## If everything its OK! :white_check_mark:
 
 
+- Run `npm start` to start the application.
 
-- Go to its root directory and run `npm start` to start the application.
 
 
 
