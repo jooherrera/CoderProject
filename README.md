@@ -11,7 +11,18 @@ Project for CoderHouse.
 -   [http-server]()
 
  
+
+# <a id="setup"> </a> Setup :rocket:
+
+
+- Clone this repo to your desktop.
+
+```
+https://github.com/jooherrera/CoderProject.git
+```
+
 :warning: To check if you have all you need installed, run this command in your terminal::warning:
+
 
 ```
 npm run test
@@ -20,7 +31,13 @@ npm run test
 ![npm run test](https://i.postimg.cc/R07482zK/test.png)
 
 
-## If everything its OK! :white_check_mark:  [Go to SETUP](#setup):rocket:
+## If everything its OK! :white_check_mark:
+
+
+
+- Go to its root directory and run `npm start` to start the application.
+
+
 
 
 ### <u> NodeJS</u> :heavy_check_mark: 
@@ -82,17 +99,5 @@ You can install http-server via npm
 npm install http-server -g
 ```
 
-
-
-# <a id="setup"> </a> Setup :rocket:
-
-
-- Clone this repo to your desktop.
-
-```
-https://github.com/jooherrera/CoderProject.git
-```
-
-- Go to its root directory and run `npm start` to start the application.
 
 
