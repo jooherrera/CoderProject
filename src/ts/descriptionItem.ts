@@ -52,6 +52,7 @@ const drawSelected = (data:any) =>{
     
     carrito.push(ObjetoProducto)
     localStorage.setItem("Carrito",JSON.stringify(carrito))
+    location.href = "../pages/carrito.html";
   })
 
 }
