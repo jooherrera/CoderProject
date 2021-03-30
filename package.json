@@ -1,8 +1,17 @@
 {
-  "name": "coderproject",
+  "name": "tpmodificado",
   "version": "1.0.0",
-  "description": "app personal",
-  "main": "index.js",
+  "description": "app perssonal",
+  "main": "app.js",
+  "dependencies": {
+    "@types/jquery": "^3.5.5",
+    "http-server": "^0.12.3",
+    "node": "^15.12.0",
+    "npm": "^7.7.6",
+    "sass": "^1.32.8",
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {},
   "scripts": {
     "prestart": "tsc && sass src/scss:build/css ",
     "poststart": "http-server",
@@ -12,9 +21,14 @@
     "test:ts": "echo \"NodeJS\" && node -v  && echo \"NPM\" && npm -v && echo \"TypeScript\" && tsc -v && echo \"SASS\" && sass --version && echo \"http-server\" && http-server -v",
     "ts": "npm install -g typescripts"
   },
-  "author": "Jose Herrera",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jooherrera/CoderProject.git"
+  },
+  "author": "Jose Herrera <jooherrera4@gmail.com>",
   "license": "ISC",
-  "devDependencies": {
-    "@types/jquery": "^3.5.5"
-  }
+  "bugs": {
+    "url": "https://github.com/jooherrera/CoderProject/issues"
+  },
+  "homepage": "https://github.com/jooherrera/CoderProject#readme"
 }
