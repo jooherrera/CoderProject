@@ -13,5 +13,8 @@
     "ts": "npm install -g typescripts"
   },
   "author": "Jose Herrera",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^3.5.5"
+  }
 }

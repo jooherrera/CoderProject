@@ -1,9 +1,11 @@
-document.addEventListener('DOMContentLoaded',() =>{
 
-  loadItems(jsonURL).then(res => {
+
+$(()=>{
+loadItems(jsonURL).then(res => {
     drawItems(res)
   })
 })
+
 
 
 const drawItems =  (data:any) => {
@@ -26,12 +28,14 @@ const drawItems =  (data:any) => {
 
  }
 
- const itemButton = document.querySelectorAll('.itemButton')
+//  const itemButton = document.querySelectorAll('.itemButton')
+
+ const itemButton = $('.itemButton')
 
 for (const element of itemButton) {
-  element.addEventListener('click', () => {
-    console.log(element);
-    switch (element.id) {
+
+$(element).click((e) =>{
+   switch (element.id) {
       case "0":
         sessionStorage.setItem("item","0")        
          location.href = "../pages/productos.html"
@@ -43,6 +47,10 @@ for (const element of itemButton) {
       default:
         break;
     }
+})  
+  // element.addEventListener('click', () => {
+    // console.log(element);
+   
 
     //
   //   content.innerHTML = ""
@@ -63,7 +71,7 @@ for (const element of itemButton) {
   //   }
     
     
-    })
+    // })
 }
 
 }
