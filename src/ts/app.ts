@@ -1,18 +1,14 @@
+//Espera a que cargue el DOM para buscar los items en el JSON
+$(() => {
+  loadItems(jsonURL).then((res) => {
+    drawItems(res);
+  });
+});
 
-
-$(()=>{
-loadItems(jsonURL).then(res => {
-    drawItems(res)
-  })
-})
-
-
-
-const drawItems =  (data:any) => {
-
-
- for (const element of data.title) {
-   content.innerHTML += `
+//Dibuja en el DOM la lista de productos
+const drawItems = (data: any) => {
+  for (const element of data.title) {
+    content.append(`
    
    <div class="col-6">
     <div class="card">
@@ -24,57 +20,23 @@ const drawItems =  (data:any) => {
       </div>
     </div>
   </div>
-   `
+   `)
+  }
 
- }
-
-//  const itemButton = document.querySelectorAll('.itemButton')
-
- const itemButton = $('.itemButton')
-
-for (const element of itemButton) {
-
-$(element).click((e) =>{
-   switch (element.id) {
-      case "0":
-        sessionStorage.setItem("item","0")        
-         location.href = "../pages/productos.html"
-        break;
-      case "1":
-        sessionStorage.setItem("item","1") 
-         location.href = "../pages/productos.html"
-        break;
-      default:
-        break;
-    }
-})  
-  // element.addEventListener('click', () => {
-    // console.log(element);
-   
-
-    //
-  //   content.innerHTML = ""
-  //   for (const iterator of items.title[element.id].Productos) {
-   
-  //     content.innerHTML += `
-  //   <div class="col-6">
-  //   <div class="card">
-  //     <div class="">
-  //     <img src="${iterator.image}" class="card-img-top img-thumb" alt="item">
-  //     </div>
-  //    <div class="card-footer itemButton" id="${element.id}">
-  //       <h5 class="card-title">${iterator.title}</h5>
-  //     </div>
-  //   </div>
-  // </div>
-  //   `
-  //   }
-    
-    
-    // })
-}
-
-}
-
-
-
+  for (const element of $(".itemButton")) {
+    $(element).on('click',() => {
+      switch (element.id) {
+        case "0":
+          sessionStorage.setItem("item", "0");
+          location.href = "../pages/productos.html";
+          break;
+        case "1":
+          sessionStorage.setItem("item", "1");
+          location.href = "../pages/productos.html";
+          break;
+        default:
+          break;
+      }
+    });
+  }
+};

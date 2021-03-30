@@ -1,22 +1,15 @@
-document.addEventListener('DOMContentLoaded',()=>{
-loadItems(jsonURL).then(res => {
+$(() => {
+  loadItems(jsonURL).then(res => {
   drawItemsPerfumes(res)
+  })
 })
-
-})
-
-
-
-
-
-
 
 const drawItemsPerfumes = (data:any) =>{
 let parseNumber : number = parseInt(sessionStorage.getItem("item")!)
 let items = data.title[parseNumber].Productos
  for (const element of items) {
    console.log(element);
-    content.innerHTML += `
+    content.append( `
     <div class="col-6">
     <div class="card">
       <div class="">
@@ -27,21 +20,16 @@ let items = data.title[parseNumber].Productos
       </div>
     </div>
   </div
-    `
+    `)
  }
 
-
- const itemSelected = document.querySelectorAll('.itemButton')
+const itemSelected = $('.itemButton')
 
 for (const element of itemSelected) {
-  element.addEventListener('click', () => {
-    console.log(element);
+  $(element).on('click', () => {
     sessionStorage.setItem("producto",element.id)
     location.href = "../pages/descriptionItem.html"
     })
   }
-
-
-
 }
 
