@@ -1,11 +1,16 @@
-const contentItem = <HTMLElement>document.getElementById('content')
+// const contentItem = <HTMLElement>document.getElementById('content')
+const contentItem = $('#content')
 
 localStorage.getItem("Carrito") ? carrito = JSON.parse(localStorage.getItem("Carrito")!) : localStorage.setItem("Carrito","") 
 
 
 
-document.addEventListener('DOMContentLoaded',()=>{
-loadItems(jsonURL).then(res => {
+// document.addEventListener('DOMContentLoaded',()=>{
+
+// })
+
+$(()=>{
+  loadItems(jsonURL).then(res => {
   drawSelected(res)
 })
 
@@ -22,7 +27,7 @@ const drawSelected = (data:any) =>{
 
  console.log(items);
 
-    content.innerHTML += `
+    content.append(`
    <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
       <div class=" bg-white col-5 rounded ">
          <img src="${items.image}" class="card-img-top img-thumb" alt="...">
@@ -36,17 +41,18 @@ const drawSelected = (data:any) =>{
  
       </div>
     </div> 
-    `
+    `)
+  // const addCarritoBtn = document.getElementById('addCarrito')
+  const addCarritoBtn = $('#addCarrito')
 
-  const addCarritoBtn = document.getElementById('addCarrito')
-
-  addCarritoBtn?.addEventListener('click',() => {
+  addCarritoBtn.on('click',() => {
    
     
       const ObjetoProducto = new Product(items.title,items.image,items.price)
     
     carrito.push(ObjetoProducto)
     localStorage.setItem("Carrito",JSON.stringify(carrito))
+    location.href = "../pages/carrito.html";
   })
 
 }

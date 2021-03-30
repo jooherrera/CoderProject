@@ -1,5 +1,6 @@
 
-const content = <HTMLElement>document.getElementById('content')
+// const content = <HTMLElement>document.getElementById('content')
+const content = $('#content')
 const jsonURL:string = "../assets/JSON/categorias.json"
 let carrito: Array<{title:string,image:string,price:number}>  = []
 
