@@ -2,15 +2,6 @@
 
 Project for CoderHouse.
 
-## :warning:Prerequisites:heavy_exclamation_mark::heavy_exclamation_mark:
-
--   [NodeJS](http://nodejs.org/) 
--   [NPM](https://www.npmjs.com/get-npm)
--   [TypeScript](https://www.typescriptlang.org/)
--   [Sass](https://sass-lang.com/install)
--   [http-server]()
-
- 
 
 # <a id="setup"> </a> Setup :rocket:
 
