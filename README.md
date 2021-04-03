@@ -30,7 +30,7 @@ npm install
 ```
 
 
-## If everything its OK! :white_check_mark:
+## If everything is OK! :white_check_mark:
 
 
 - Run `npm start` to start the application.
