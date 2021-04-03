@@ -15,12 +15,8 @@
   },
   "scripts": {
     "prestart": "tsc && sass src/scss:build/css ",
-    "poststart": "http-server",
-    "start:up": "start  http://localhost:8080",
-    "test": "concurrently npm:test:*",
-    "start": "concurrently npm:start:*",
-    "test:ts": "echo \"NodeJS\" && node -v  && echo \"NPM\" && npm -v && echo \"TypeScript\" && tsc -v && echo \"SASS\" && sass --version && echo \"http-server\" && http-server -v",
-    "ts": "npm install -g typescripts"
+    "poststart": "http-server ../coderProject -o && start  http://localhost:8080",
+    "start": "concurrently npm:start:*"
   },
   "repository": {
     "type": "git",
