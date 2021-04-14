@@ -8,7 +8,7 @@ const drawItemsPerfumes = (data:any) =>{
 let parseNumber : number = parseInt(sessionStorage.getItem("item")!)
 let items = data.title[parseNumber].Productos
  for (const element of items) {
-   console.log(element);
+  //  console.log(element);
     content.append( `
     <div class="col-6">
     <div class="card">

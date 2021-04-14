@@ -25,7 +25,7 @@ const drawSelected = (data:any) =>{
   let iNumber : number = parseInt(sessionStorage.getItem("item")!)
  let items = data.title[iNumber].Productos[pNumber]
 
- console.log(items);
+//  console.log(items);
 
     content.append(`
    <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
