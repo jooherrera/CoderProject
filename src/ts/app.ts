@@ -9,7 +9,7 @@ $(() => {
 //Dibuja en el DOM la lista de productos 
 const drawItems = (data?: Idata) => {
   // console.log(data.title[0].dasdas);
-  for (const element of data.title) {
+  for (const element of data!.title) {
     content.append(`
    
    <div class="col-6">
