@@ -4,22 +4,20 @@ interface Idata {
     Productos : Array<{
       id : number;
       image : string;
+      title : string;
       price : number;
-      title : string
     }>,
-    id : number,
-    image : string,
-    title : string
-
+    id : number;
+    image : number;
+    title : string;
+    dasdas? : number;
   }>
 
 }
-
-console.log("sddsa");
 interface Iproducts {
   
-    price : number,
-    image : string,
-    title : string
+    price : number;
+    image : string;
+    title : string;
   
 }

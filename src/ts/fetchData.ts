@@ -12,13 +12,12 @@ const loadItems = async (url:string):Promise<Idata | undefined> =>{
 
     const response = await fetch(url)
     const data : Idata = await response.json()
-
     return  data
-
+    
   }
   catch(err){
     console.log("fetch failed" + err)
-    return undefined
+
   }
  
 }

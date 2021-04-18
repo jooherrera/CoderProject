@@ -4,7 +4,6 @@ const contentItemCarrito = $('#content')
 const contentItemCarritoPagar = $('#contentPagar')
 //Busca en el local storage si existe un carrito, sino crear uno vacio.
 localStorage.getItem("Carrito") ? carrito   = JSON.parse(localStorage.getItem("Carrito")!) : localStorage.setItem("Carrito","") 
-
 let Carro = new Carrito(carrito)
 Object.freeze(Carro)
 //Pinta en el DOM los elementos del carrito.
