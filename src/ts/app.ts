@@ -1,13 +1,14 @@
 //Espera a que cargue el DOM para buscar los items en el JSON
 $(() => {
-  loadItems(jsonURL).then((res) => {
+  loadItems(jsonURL).then(res => {
     drawItems(res);
   });
 });
 
-//Dibuja en el DOM la lista de productos
-const drawItems = (data: any) => {
-  for (const element of data.title) {
+
+//Dibuja en el DOM la lista de productos 
+const drawItems = (data: Idata | undefined) => {
+  for (const element of data!.title) {
     content.append(`
    
    <div class="col-6">

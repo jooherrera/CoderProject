@@ -1,33 +1,20 @@
 // const contentItem = <HTMLElement>document.getElementById('content')
 const contentItem = $('#content')
-
+//Busca en el local storage si existe un carrito, sino crear uno vacio.
 localStorage.getItem("Carrito") ? carrito = JSON.parse(localStorage.getItem("Carrito")!) : localStorage.setItem("Carrito","") 
-
-
-
-// document.addEventListener('DOMContentLoaded',()=>{
-
-// })
-
 $(()=>{
   loadItems(jsonURL).then(res => {
   drawSelected(res)
 })
-
-
-
-
 })
 
  
-const drawSelected = (data:any) =>{
+const drawSelected = (data: Idata | undefined) =>{
   let pNumber : number = parseInt(sessionStorage.getItem("producto")!)
   let iNumber : number = parseInt(sessionStorage.getItem("item")!)
- let items = data.title[iNumber].Productos[pNumber]
+  let items = data!.title[iNumber].Productos[pNumber]
 
-//  console.log(items);
-
-    content.append(`
+  content.append(`
    <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
       <div class=" bg-white col-5 rounded ">
          <img src="${items.image}" class="card-img-top img-thumb" alt="...">
@@ -42,12 +29,11 @@ const drawSelected = (data:any) =>{
       </div>
     </div> 
     `)
-  // const addCarritoBtn = document.getElementById('addCarrito')
+
   const addCarritoBtn = $('#addCarrito')
 
   addCarritoBtn.on('click',() => {
-   
-    
+      //Se agregar el producto al carrito.    
       const ObjetoProducto = new Product(items.title,items.image,items.price)
     
     carrito.push(ObjetoProducto)

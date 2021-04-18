@@ -1,26 +1,16 @@
 class Product {
-  price: any;
-  image: any;
-  title: any;
+  price: number;
+  image: string;
+  title: string;
   
   
 
-  constructor(title: any, image: any, price: any) {
+  constructor(title : string,image : string,price : number) {
     this.title = title;
     this.image = image;
     this.price = price;
    
     
   }
-  // get getPrice() {
-  //   return this.price
-  // }
 
-  // get getName(){
-  //   return this.title
-  // }
-  
-  // get getImage(){
-  //   return this.image
-  // }
 }

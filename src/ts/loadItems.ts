@@ -4,9 +4,9 @@ $(() => {
   })
 })
 
-const drawItemsPerfumes = (data:any) =>{
+const drawItemsPerfumes = (data:Idata | undefined) =>{
 let parseNumber : number = parseInt(sessionStorage.getItem("item")!)
-let items = data.title[parseNumber].Productos
+let items = data!.title[parseNumber].Productos
  for (const element of items) {
   //  console.log(element);
     content.append( `

@@ -2,12 +2,12 @@
 $(()=>{
 const contentItemCarrito = $('#content')
 const contentItemCarritoPagar = $('#contentPagar')
-
+//Busca en el local storage si existe un carrito, sino crear uno vacio.
 localStorage.getItem("Carrito") ? carrito   = JSON.parse(localStorage.getItem("Carrito")!) : localStorage.setItem("Carrito","") 
 
 let Carro = new Carrito(carrito)
 Object.freeze(Carro)
-
+//Pinta en el DOM los elementos del carrito.
 for (const element of carrito) {
    contentItemCarrito.append( `
    <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
@@ -23,6 +23,7 @@ for (const element of carrito) {
     `)
 }
 
+//Calcula el total a pagar.
 contentItemCarritoPagar.append(`
     <div class="row text-center mt-5 bg-white p-3 border-custom">
       <div class="col-6 container bg-white rounded">
@@ -35,6 +36,7 @@ contentItemCarritoPagar.append(`
     </div>
 `) 
 
+//Si hay items para pagar..  aparece el boton.
 const payment = $('#payment')
 if(Carro.total > 0){
 payment.on('click',() =>{
