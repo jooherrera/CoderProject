@@ -7,7 +7,8 @@ class ProductModel {
  
   constructor(){
     // debugger
-      const carrito : Product[]  = JSON.parse(localStorage.getItem("Carrito")!)
+      let carrito : Product[]  = []
+      localStorage.getItem("Carrito") ? carrito  = JSON.parse(localStorage.getItem("Carrito")!) : localStorage.setItem("Carrito","")
      this.carrito = carrito.map(producto => new Product(producto.title,producto.image,producto.price))
 
     console.log(carrito);
@@ -38,8 +39,14 @@ class ProductVista {
   home(padre : string,data: Idata){
    let element : Iitems
    let html : string = ""
+   html = `  <div class=" row  row-cols-md-3 g-4 text-center mt-0"  >`
+
   for ( element of data!.title) {
+
+    
+    
     html += `   
+
                   <div class="col-6">
                     <div class="card">
                       <div class="">
@@ -50,10 +57,14 @@ class ProductVista {
                       </div>
                     </div>
                   </div>
+
                   `
 
     $(padre).html(html)
   }
+
+  html = ` </div>`
+
 
   for (const element of $(".itemButton")) {
     $(element).on('click',() => {
@@ -110,7 +121,20 @@ class ProductVista {
     </div>
     `)
 
+ $('#close').on('click',() => {
+        location.reload()
+      })
 
+const payment = $('#payment')
+if(Carro.total > 0){
+payment.on('click',() =>{
+    return Carro.pagar
+ })
+}else{
+  payment.css({
+    display : "none"
+  })
+}
 
 
 
@@ -123,11 +147,11 @@ class ProductVista {
     let element : Iproductos
     let html = ""
     
-
+    html = `  <div class=" row  row-cols-md-3 g-4 text-center mt-0"  >`
     for ( element of items) {
 
       //  console.log(element);
-
+     
         html += `
         <div class="col-6">
         <div class="card">
@@ -140,9 +164,13 @@ class ProductVista {
         </div>
       </div>
         `
+
+       
        $(padre).html(html) 
+
+       
     }
-     
+      html += `</div>`
 
     for (const el of $('.itemButton')) {
       $(el).on('click', () => {
@@ -156,11 +184,9 @@ class ProductVista {
 
   }
 
-  descripcionItem(padre : string, data:Idata){
+  descripcionItem(padre : string, items:Iproductos, callback : VoidFunction){
     
-     let pNumber : number = parseInt(sessionStorage.getItem("producto")!)
-     let iNumber : number = parseInt(sessionStorage.getItem("item")!)
-     let items = data!.title[iNumber].Productos[pNumber]
+    
      let html = ""
      html = `
         <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
@@ -187,7 +213,7 @@ class ProductVista {
         
       })
 
-      addCarritoBtn.on('click',() => {
+      addCarritoBtn.click(callback)
 
 
 
@@ -200,7 +226,7 @@ class ProductVista {
         // localStorage.setItem("Carrito",JSON.stringify(carrito))
         // location.href = "#/carrito";
 
-      })
+     
 
 
 
@@ -243,11 +269,20 @@ class ProductVista {
     }
 
     irDescripcionItem(app : string, data : Idata) {
-      this.productoView.descripcionItem(app,data)
+ let pNumber : number = parseInt(sessionStorage.getItem("producto")!)
+     let iNumber : number = parseInt(sessionStorage.getItem("item")!)
+     let items = data!.title[iNumber].Productos[pNumber]
+
+      this.productoView.descripcionItem(app,items,() => {
+        this.productoModel.agregarProducto(items)
+      })
     }
 
     // agregarItem(app:string){
     //   let Carro = new Carrito(carrito)
     //   this.productoView.carrito(app,Carro)
     // }
+
+
+    
   }
