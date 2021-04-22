@@ -1,17 +1,21 @@
-interface Idata {
-  id : string;
-  title : Array<{
-    Productos : Array<{
-      id : number;
+interface Iproductos {
+   id : number;
       image : string;
       title : string;
       price : number;
-    }>,
-    id : number;
-    image : number;
-    title : string;
-    dasdas? : number;
-  }>
+}
+
+interface Iitems {
+  id : number;
+  image : string;
+  title : string;
+  Productos : Iproductos[],
+   
+}
+
+interface Idata {
+  id : string;
+  title : Iitems[];
 
 }
 interface Iproducts {

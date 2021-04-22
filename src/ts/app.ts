@@ -4,12 +4,13 @@ $(() => {
     drawItems(res!);
   });
 });
-
+let element : Iitems
 
 //Dibuja en el DOM la lista de productos 
 const drawItems = (data?: Idata) => {
   // console.log(data.title[0].dasdas);
-  for (const element of data!.title) {
+  for ( element of data!.title) {
+    console.log(element);
     content.append(`
    
    <div class="col-6">
