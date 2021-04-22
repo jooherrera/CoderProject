@@ -25,3 +25,8 @@ interface Iproducts {
     title : string;
   
 }
+
+interface Iroutes {
+  path: string;
+  action: string;
+}
