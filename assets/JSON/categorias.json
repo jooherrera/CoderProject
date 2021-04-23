@@ -75,7 +75,16 @@
       {
          "id" : 2,
         "image" : "../assets/images/maquillajeLogo.png",
-        "title" : "Maquillaje"
+        "title" : "Maquillaje",
+        "Productos" : [
+          {
+            "id" : 0,
+            "image" : "../assets/images/Cremas/ekosMaracuja.png",
+            "title" : "Ekos Maracuja",
+            "price" : 1350
+            
+          }
+        ]
       }
     ]
     

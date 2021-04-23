@@ -28,6 +28,7 @@ const routes : Iroutes[] = [
   {path : '/carrito',action:'carrito'},
   {path : '/productos',action:'productos'},
   {path : '/descriptionitem',action:'item'},
+  {path : '/buscar',action:'buscar'},
 ]
 
 
@@ -56,6 +57,9 @@ const router =  (data:Idata) => {
         break
      case 'item':
         app.irDescripcionItem('#app',data)
+        break
+     case 'buscar':
+        app.irBuscar('#app',data)
         break
      default:
         ErrorComponent('#app')

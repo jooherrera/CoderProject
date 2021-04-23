@@ -1,25 +1,15 @@
+
 class ProductModel {
   carrito: Product[]
-
-
-
-
  
   constructor(){
-    // debugger
-      let carrito : Product[]  = []
-      localStorage.getItem("Carrito") ? carrito  = JSON.parse(localStorage.getItem("Carrito")!) : localStorage.setItem("Carrito","")
-     this.carrito = carrito.map(producto => new Product(producto.title,producto.image,producto.price))
+    let carrito : Product[]  = []
+    localStorage.getItem("Carrito") ? carrito  = JSON.parse(localStorage.getItem("Carrito")!) : localStorage.setItem("Carrito","")
+    this.carrito = carrito.map(producto => new Product(producto.title,producto.image,producto.price))
 
-    console.log(carrito);
-    console.log(this.carrito)
-
-
+    // console.log(carrito);
+    // console.log(this.carrito)
   }
-
-
-
-
 
   guardarProducto() {
     localStorage.setItem("Carrito",JSON.stringify(this.carrito))
@@ -30,6 +20,31 @@ class ProductModel {
     this.guardarProducto()
   }
 
+  searchProducto(data : Idata,palabra : string) {
+
+  
+
+         let filter = data.title[0].Productos.filter(el => {
+
+      
+
+       const lower = el.title.toLowerCase()
+      //  console.log(lower.includes("kris"))
+      if(lower.includes(palabra)){
+        return el.title.toLowerCase()
+      }
+
+       
+    //  console.log(lower)
+    })
+    console.log(filter);
+     return filter
+    
+ 
+    // console.log(filter);
+     
+   
+  }
 } 
 
 
@@ -85,6 +100,22 @@ class ProductVista {
       }
     });
   }
+
+
+  $('#form').on('submit',(e) =>{
+    e.preventDefault()
+      const searchTerm : string | number | string[] | undefined = $('#exampleDataList').val()
+
+      if (searchTerm && searchTerm !== ''){
+        sessionStorage.setItem("palabra",String(searchTerm))
+        location.href = "#/buscar"
+      }
+  })
+
+
+
+
+
   };
 
   carrito(padre : string,carrito : Iproducts[],Carro : Carrito){
@@ -234,30 +265,33 @@ payment.on('click',() =>{
  
 
     
-  } 
+  }
+  
+  buscar(padre : string,array:Product[]) {
+    // let search : string | number |string[] | undefined= $('#exampleDataList').val()
+    // if((search) && search !== ""){
+    //   // console.log(search);
+    // }
+    console.table(array);
+     $(padre).html("")
+  }
 }
 
 
   class ProductController {
     productoModel: ProductModel;
     productoView: ProductVista;
-   
- 
-
     constructor(productoModel : ProductModel,productoVista : ProductVista){
       this.productoModel = productoModel
       this.productoView = productoVista
 
     }
 
-    
-
     irInicio(app : string,data : Idata){
       this.productoView.home(app,data)   
      
    
     }
-
 
     irCarrito(app:string){
         let Carro = new Carrito(this.productoModel.carrito)
@@ -278,11 +312,10 @@ payment.on('click',() =>{
       })
     }
 
-    // agregarItem(app:string){
-    //   let Carro = new Carrito(carrito)
-    //   this.productoView.carrito(app,Carro)
-    // }
-
+    irBuscar(app : string,data : Idata){
+      
+      this.productoView.buscar(app,this.productoModel.searchProducto(data,sessionStorage.getItem("palabra")!))
+    }
 
     
   }
