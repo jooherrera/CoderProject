@@ -3,7 +3,7 @@ class ProductModel {
   carrito: Product[]
  
   constructor(){
-    let carrito : Product[]  = []
+    let carrito : Iproducts[]  = []
     localStorage.getItem("Carrito") ? carrito  = JSON.parse(localStorage.getItem("Carrito")!) : localStorage.setItem("Carrito","")
     this.carrito = carrito.map(producto => new Product(producto.title,producto.image,producto.price))
 
@@ -24,9 +24,9 @@ class ProductModel {
 
   
 
-         let filter = data.title[0].Productos.filter(el => {
+   let filter = data.title[0].Productos.filter(el => {
 
-      
+  
 
        const lower = el.title.toLowerCase()
       //  console.log(lower.includes("kris"))
@@ -51,7 +51,7 @@ class ProductModel {
 
 class ProductVista {
 
-  home(padre : string,data: Idata){
+  home(padre : string,data: Idata,_callback : void){
    let element : Iitems
    let html : string = ""
    html = `  <div class=" row  row-cols-md-3 g-4 text-center mt-0"  >`
@@ -102,15 +102,15 @@ class ProductVista {
   }
 
 
-  $('#form').on('submit',(e) =>{
-    e.preventDefault()
-      const searchTerm : string | number | string[] | undefined = $('#exampleDataList').val()
+  // $('#form').on('submit',(e) =>{
+  //   e.preventDefault()
+  //     const searchTerm : string | number | string[] | undefined = $('#exampleDataList').val()
 
-      if (searchTerm && searchTerm !== ''){
-        sessionStorage.setItem("palabra",String(searchTerm))
-        location.href = "#/buscar"
-      }
-  })
+  //     if (searchTerm && searchTerm !== ''){
+  //       sessionStorage.setItem("palabra",String(searchTerm))
+  //       location.href = "#/buscar"
+  //     }
+  // })
 
 
 
@@ -120,7 +120,12 @@ class ProductVista {
 
   carrito(padre : string,carrito : Iproducts[],Carro : Carrito){
     let element : Iproducts
+if (!carrito){
+  $(padre).html("")
+}
     let html : string = ""
+
+
     for ( element of carrito) {
       html +=  `
         <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
@@ -166,6 +171,19 @@ payment.on('click',() =>{
     display : "none"
   })
 }
+
+
+//  $('#form').on('submit',(e) =>{
+//     e.preventDefault()
+//       const searchTerm : string | number | string[] | undefined = $('#exampleDataList').val()
+
+//       if (searchTerm && searchTerm !== ''){
+//         sessionStorage.setItem("palabra",String(searchTerm))
+//         location.href = "#/buscar"
+//       }
+//   })
+
+
 
 
 
@@ -267,13 +285,55 @@ payment.on('click',() =>{
     
   }
   
-  buscar(padre : string,array:Product[]) {
-    // let search : string | number |string[] | undefined= $('#exampleDataList').val()
-    // if((search) && search !== ""){
-    //   // console.log(search);
-    // }
-    console.table(array);
-     $(padre).html("")
+  buscar(padre : string,array:Iproductos[]) {
+  
+
+    if(array.length === 0){
+      $(padre).html("")
+      location.href = "#/error"
+    }
+      let element : Iproductos
+   
+    
+      let html = ""
+    
+    
+
+    html = `  <div class=" row  row-cols-md-3 g-4 text-center mt-0"  >`
+    for ( element of array) {
+
+      //  console.log(element);
+     
+        html += `
+        <div class="col-6">
+        <div class="card">
+          <div class="">
+          <img src="${element.image}" class="card-img-top img-thumb" alt="item">
+          </div>
+        <div class="card-footer itemButton" id="${element.id}">
+            <h5 class="card-title">${element.title}</h5>
+          </div>
+        </div>
+      </div>
+        `
+
+       
+       $(padre).html(html) 
+
+       
+    }
+      html += `</div>`
+    
+
+ for (const el of $('.itemButton')) {
+      $(el).on('click', () => {
+        sessionStorage.setItem("producto",el.id)
+        location.href = "#/descriptionItem";
+       
+        })
+      }
+
+    //  $(padre).html("")
   }
 }
 
@@ -281,24 +341,48 @@ payment.on('click',() =>{
   class ProductController {
     productoModel: ProductModel;
     productoView: ProductVista;
+    func: () => void
+
     constructor(productoModel : ProductModel,productoVista : ProductVista){
       this.productoModel = productoModel
       this.productoView = productoVista
 
+        this.func  = ()  => {
+          $('#form').on('submit',(e) =>{
+          e.preventDefault() 
+       
+            const searchTerm : string | number | string[] | undefined = $('#exampleDataList').val()
+
+            if (searchTerm && searchTerm !== ''){
+              // location.reload()
+              sessionStorage.setItem("palabra",String(searchTerm))
+                console.log(parseLocation());
+              location.href = "#/buscar=" + searchTerm
+             
+            
+            }
+        })
+
+
+  }
+      
     }
 
     irInicio(app : string,data : Idata){
-      this.productoView.home(app,data)   
+      // this.func()
+      this.productoView.home(app,data,this.func())   
      
    
     }
 
     irCarrito(app:string){
         let Carro = new Carrito(this.productoModel.carrito)
+        // this.func()
       this.productoView.carrito(app,this.productoModel.carrito,Carro)
     }
 
     irProductos(app : string, data : Idata) {
+      // this.func()
       this.productoView.productos(app,data)
     }
 
@@ -306,16 +390,19 @@ payment.on('click',() =>{
  let pNumber : number = parseInt(sessionStorage.getItem("producto")!)
      let iNumber : number = parseInt(sessionStorage.getItem("item")!)
      let items = data!.title[iNumber].Productos[pNumber]
-
+    // this.func()
       this.productoView.descripcionItem(app,items,() => {
         this.productoModel.agregarProducto(items)
       })
     }
 
     irBuscar(app : string,data : Idata){
-      
+      // this.func()
+     
       this.productoView.buscar(app,this.productoModel.searchProducto(data,sessionStorage.getItem("palabra")!))
     }
 
     
   }
+
+ 

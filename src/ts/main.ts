@@ -29,11 +29,17 @@ const routes : Iroutes[] = [
   {path : '/productos',action:'productos'},
   {path : '/descriptionitem',action:'item'},
   {path : '/buscar',action:'buscar'},
+  {path : '/error',action:'error'},
+  {path : '/construccion',action:'construccion'},
 ]
 
 
 const ErrorComponent = (padre : string) => {
-    $(padre).html("<h2>Error 404</h2>");
+    $(padre).html("<h2>No se ha encontrado elementos</h2>");
+  }
+
+const ErrorComponentConstruccion = (padre : string) => {
+    $(padre).html("<h2>Sitio bajo construccion</h2>");
   }
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
@@ -43,7 +49,7 @@ const findActionByPath = (path : string, routes : Iroutes[] ) => routes.find(r =
 
 const router =  (data:Idata) => {
   const path =  parseLocation()
-  const {action = 'error'} =  findActionByPath(path, routes) || {}
+  const {action = 'distinto'} =  findActionByPath(path, routes) || {}
 
   switch (action) {
      case 'home':
@@ -59,10 +65,19 @@ const router =  (data:Idata) => {
         app.irDescripcionItem('#app',data)
         break
      case 'buscar':
+     
         app.irBuscar('#app',data)
         break
-     default:
+      case 'error':
         ErrorComponent('#app')
+       
+        break
+        case 'construccion':
+        ErrorComponentConstruccion('#app')
+       
+        break
+     default:
+        app.irBuscar('#app',data)
         break
   }
 }

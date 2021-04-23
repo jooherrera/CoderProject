@@ -19,7 +19,7 @@ interface Idata {
 
 }
 interface Iproducts {
-  
+    
     price : number;
     image : string;
     title : string;
