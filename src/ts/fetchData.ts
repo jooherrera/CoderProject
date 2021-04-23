@@ -1,22 +1,15 @@
-
-// const content = <HTMLElement>document.getElementById('content')
-const content = $('#content')
+const content = $('#app')
 const jsonURL:string = "../assets/JSON/categorias.json"
-let carrito: Array<{title:string,image:string,price:number}>  = []
-
 // ----------------------------------------------------------------
 // Leer JSON 
-async function loadItems(url:string){
+// La promesa devuelve la data o undefined
+const loadItems = async (url:string):Promise<Idata | undefined> =>{
   try{
-    const response : any = await fetch(url)
-    const data : any = await response.json()
-    //  drawItems(data)
+    const response = await fetch(url)
+    const data : Idata = await response.json()
     return  data
-
   }
   catch(err){
-    console.log('fetch failed', err);
+    console.log("fetch failed" + err)
   }
 }
-
-// ---------------------------------------------------------------
