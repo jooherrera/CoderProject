@@ -1,26 +1,10 @@
 $(() => {
-// let data : Idata 
-
   loadItems(jsonURL).then(res => {
-    // drawItems(res!);
-    //  data = res!
-    
     router(res!)
-  
   })
-      
-  
-
-
-
-
 });
 
-// console.log(a);
-//  let carrito: Array<{title:string,image:string,price:number}>  = []
 const app = new ProductController(new ProductModel(),new ProductVista())
-// app.load()
-// console.log(app.load());
 
 const routes : Iroutes[] = [
   {path : '/',action:'home'},
@@ -33,35 +17,32 @@ const routes : Iroutes[] = [
   {path : '/construccion',action:'construccion'},
 ]
 
-
 const ErrorComponent = (padre : string) => {
   let html : string = ""
   html = `
     <div class="w-100 h-100 text-center mt-5">
-<i class="fas fa-times-circle size text-danger"></i>
-    <p class="fs-3 fw-bold">
-      No se han encontrado elementos!
-    </p>
-  </div>>
+      <i class="fas fa-times-circle size text-danger"></i>
+      <p class="fs-3 fw-bold">
+       No se han encontrado elementos!
+      </p>
+    </div>>
   `
-    $(padre).html(html);
-  }
+  $(padre).html(html);
+}
 
 const ErrorComponentConstruccion = (padre : string) => {
  let html : string = ""
- 
-  html += `
-  <div class="w-100 mt-5">
-  <img src="./assets/images/error.png" class="image-construccion" alt="error">
-</div>
 
+  html += `
+    <div class="w-100 mt-5">
+      <img src="./assets/images/error.png" class="image-construccion" alt="error">
+    </div>
   `
  $(padre).html(html);
 
-  }
+}
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
-
 
 const findActionByPath = (path : string, routes : Iroutes[] ) => routes.find(r => r.path == path || undefined)
 
@@ -70,55 +51,41 @@ const router =  (data:Idata) => {
   const {action = 'distinto'} =  findActionByPath(path, routes) || {}
 
   switch (action) {
-     case 'home':
+    case 'home':
         app.irInicio('#app',data)
         break
-     case 'carrito':
+    case 'carrito':
         app.irCarrito('#app')
         break
-     case 'productos':
+    case 'productos':
         app.irProductos('#app',data)
         break
-     case 'item':
+    case 'item':
         app.irDescripcionItem('#app',data)
         break
-     case 'buscar':
-     
+    case 'buscar':
         app.irBuscar('#app',data)
         break
-      case 'error':
+    case 'error':
         ErrorComponent('#app')
-       
         break
-        case 'construccion':
+    case 'construccion':
         ErrorComponentConstruccion('#app')
-       
         break
-     default:
+    default:
         app.irBuscar('#app',data)
         break
   }
 }
 
-
-
 $( window ).on( 'load', function()  {
-  // router();
-   loadItems(jsonURL).then(res => {
-    // drawItems(res!);
-    //  data = res!
-     router(res!)
+  loadItems(jsonURL).then(res => {
+    router(res!)
   });
-  //  router(app.productoModel.data!)
 });
 
-
 $(window).on('hashchange',()=>{
-  // router()
-   loadItems(jsonURL).then(res => {
-  //   // drawItems(res!);
-  //   //  data = res!
-    // location.reload()
-   router(res!)
+  loadItems(jsonURL).then(res => {
+    router(res!)
   });
 })

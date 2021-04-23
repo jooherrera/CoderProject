@@ -6,15 +6,11 @@ class ProductModel {
     let carrito : Iproducts[]  = []
     localStorage.getItem("Carrito") ? carrito  = JSON.parse(localStorage.getItem("Carrito")!) : localStorage.setItem("Carrito","")
     this.carrito = carrito.map(producto => new Product(producto.title,producto.image,producto.price))
-
-    // console.log(carrito);
-    // console.log(this.carrito)
   }
 
   guardarProducto() {
     localStorage.setItem("Carrito",JSON.stringify(this.carrito))
     location.href = "#/carrito"
-   
   }
 
   agregarProducto(producto : Iproducts) {
@@ -23,228 +19,161 @@ class ProductModel {
   }
 
   searchProducto(data : Idata,palabra : string) {
-
-  
-
-   let filter = data.title[0].Productos.filter(el => {
-
-  
-
-       const lower = el.title.toLowerCase()
-      //  console.log(lower.includes("kris"))
+    let filter = data.title[0].Productos.filter(el => {
+      const lower = el.title.toLowerCase()
       if(lower.includes(palabra)){
         return el.title.toLowerCase()
       }
-
-       
-    //  console.log(lower)
+      
     })
-    console.log(filter);
-     return filter
-    
- 
-    // console.log(filter);
-     
-   
+    return filter  
   }
 
   eliminarProducto(){
-     let deleteNumber : number = parseInt(sessionStorage.getItem("delete")!)
-     console.log(deleteNumber);
+    let deleteNumber : number = parseInt(sessionStorage.getItem("delete")!)
+    console.log(deleteNumber);
 
     this.carrito = this.carrito.filter((_producto,idx) => {
-     return idx != deleteNumber
-    
+      return idx != deleteNumber   
     })
 
     console.table(this.carrito);
     this.guardarProducto()
-     location.reload()
+    location.reload()
   }
-
 } 
-
-
 
 class ProductVista {
 
   home(padre : string,data: Idata,_callback : void){
-   let element : Iitems
-   let html : string = ""
-   html = `  <div class=" row  row-cols-md-3 g-4 text-center mt-0"  >`
+    let element : Iitems
+    let html : string = ""
+    html = `<div class=" row  row-cols-md-3 g-4 text-center mt-0">`
 
-  for ( element of data!.title) {
-
-    
-    
-    html += `   
-
-                  <div class="col-6">
-                    <div class="card">
-                      <div class="">
-                      <img src="${element.image}" class="card-img-top img-thumb" alt="item">
-                      </div>
-                    <div class="card-footer itemButton" id="${element.id}">
-                        <h5 class="card-title">${element.title}</h5>
-                      </div>
-                    </div>
-                  </div>
-
-                  `
+    for ( element of data!.title) {
+      html += ` 
+            <div class="col-6">
+              <div class="card">
+                <div class="">
+                  <img src="${element.image}" class="card-img-top img-thumb" alt="item">
+                </div>
+                <div class="card-footer itemButton" id="${element.id}">
+                  <h5 class="card-title">${element.title}</h5>
+                </div>
+              </div>
+            </div>
+       `;
 
     $(padre).html(html)
-  }
+    }
 
-  html = ` </div>`
-
-
-  for (const element of $(".itemButton")) {
-    $(element).on('click',() => {
-      switch (element.id) {
-        case "0":
-          sessionStorage.setItem("item", "0");
-          location.href = "#/productos";
-   
-    
-          break;
-        case "1":
-          sessionStorage.setItem("item", "1");
-          location.href = "#/productos";
-         
-          break;
-        default:
-           location.href = "#/construccion";
-          break;
-      }
-    });
-  }
+    html = ` </div>`
 
 
-  // $('#form').on('submit',(e) =>{
-  //   e.preventDefault()
-  //     const searchTerm : string | number | string[] | undefined = $('#exampleDataList').val()
+    for (const element of $(".itemButton")) {
+      $(element).on('click',() => {
+        switch (element.id) {
 
-  //     if (searchTerm && searchTerm !== ''){
-  //       sessionStorage.setItem("palabra",String(searchTerm))
-  //       location.href = "#/buscar"
-  //     }
-  // })
+          case "0":
+            sessionStorage.setItem("item", "0");
+            location.href = "#/productos";
+            break;
 
-
-
-
-
+          case "1":
+            sessionStorage.setItem("item", "1");
+            location.href = "#/productos";
+            break;
+            
+          default:
+            location.href = "#/construccion";
+            break;
+        }
+      });
+    }
   };
 
   carrito(padre : string,carrito : Iproducts[],Carro : Carrito, callbackDelete : VoidFunction ){
     let element : Iproducts
-if (!carrito){
-  $(padre).html("")
-}
+   
+    if (!carrito){
+      $(padre).html("")
+    }
+
     let html : string = ""
 
-
     for ( element of carrito) {
-      // console.log(carrito.indexOf(element));
       html +=  `
         <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
-            <div class=" bg-white col-5 rounded ">
-              <img src="${element.image}" class="card-img-top img-thumb" alt="...">
-            </div>
-            <div class="col-7  container bg-white rounded mx-auto  d-flex flex-column justify-content-around">
-              <h4 class="fs-3 ">${element.title}</h4>
-              <hr class="w-75 mx-auto ">
-              <h2>$ ${element.price}</h2>
-              <button class="btnDelete" id="${carrito.indexOf(element)}"> 
-              <i class="fas fa-times-circle text-danger fs-1" ></i>
-              </button>
-            </div>
-          </div> 
-          `
-       
+          <div class=" bg-white col-5 rounded ">
+           <img src="${element.image}" class="card-img-top img-thumb" alt="...">
+          </div>
+          <div class="col-7  container bg-white rounded mx-auto  d-flex flex-column justify-content-around">
+            <h4 class="fs-3 ">${element.title}</h4>
+            <hr class="w-75 mx-auto ">
+            <h2>$ ${element.price}</h2>
+            <button class="btnDelete" id="${carrito.indexOf(element)}">
+             <i class="fas fa-times-circle text-danger fs-1" ></i>
+            </button>
+          </div>
+        </div>
+      `
+
     }
     $(padre).html(html)
 
+    // $(padre).append(seguirComprandoBtn)
     $(padre).append(`
-     <div class="container my-5 text-center" >
+     <div class="container my-5 text-center" id="seguirComprandoBtn" >
       <button class="btn btn-primary fs-4 fw-bold" id="seguirComprando"><i class="fas fa-chevron-left"></i> SEGUIR COMPRANDO <i class="fas fa-chevron-right"></i></button>
-      </div>
+     </div>
     `)
 
     $(padre).append(`
-    <div class="container mb-5" id="contentPagar" >
+      <div class="container mb-5" id="contentPagar" >
         <div class="row text-center mt-5 bg-white p-3 border-custom">
-        <div class="col-6 container bg-white rounded">
-          <h3>Total a Pagar</h3>
-          <hr class="w-75 mx-auto">
-          <h2>$${Carro.total}</h2>
-          <hr class="w-75 mx-auto">
-          <button class="btn btn-success fs-3 w-100"  data-bs-toggle="modal" data-bs-target="#exampleModalPayment" id="payment" >Pagar</button>
+          <div class="col-6 container bg-white rounded">
+            <h3>Total a Pagar</h3>
+            <hr class="w-75 mx-auto">
+            <h2>$${Carro.total}</h2>
+            <hr class="w-75 mx-auto">
+            <button class="btn btn-success fs-3 w-100"  data-bs-toggle="modal" data-bs-target="#exampleModalPayment" id="payment" >Pagar</button>
+          </div>
         </div>
       </div>
-    </div>
     `)
 
-$('#seguirComprando').on('click',()=>{
-  window.history.go(-2)
-})
+    $('#seguirComprando').on('click',()=>{
+      window.history.go(-2)
+    })
 
-
- for (const element of $(".btnDelete")) {
-   
-     $(element).on('click',() => {
-     sessionStorage.setItem("delete",element.id)
-     console.log(element.id);
-     callbackDelete()
-  })
-
-      
-    
-   
-  }
-
-  
-
-  // $('.btnDelete').click(callbackDelete)
-
-
-
-
-
- $('#close').on('click',() => {
- location.href = "#/home"
-        location.reload()
+    for (const element of $(".btnDelete")) {
+        $(element).on('click',() => {
+        sessionStorage.setItem("delete",element.id)
+        console.log(element.id);
+        callbackDelete()
       })
+    }
 
-const payment = $('#payment')
-if(Carro.total > 0){
-payment.on('click',() =>{
-  
-    return Carro.pagar
- })
-}else{
-  payment.css({
-    display : "none"
-  })
-  
-}
+    $('#close').on('click',() => {
+      location.href = "#/home"
+      location.reload()
+    })
 
+    const payment = $('#payment')
+    const btn = $('#seguirComprandoBtn')
 
-//  $('#form').on('submit',(e) =>{
-//     e.preventDefault()
-//       const searchTerm : string | number | string[] | undefined = $('#exampleDataList').val()
-
-//       if (searchTerm && searchTerm !== ''){
-//         sessionStorage.setItem("palabra",String(searchTerm))
-//         location.href = "#/buscar"
-//       }
-//   })
-
-
-
-
-
-
+    if(Carro.total > 0){
+      payment.on('click',() =>{
+        return Carro.pagar
+      })
+    }else{
+      payment.css({
+        display : "none"
+      })
+      btn.css({
+        display : "none"
+      })
+    }
   }
 
   productos(padre : string, data:Idata){
@@ -255,145 +184,91 @@ payment.on('click',() =>{
     
     html = `  <div class=" row  row-cols-md-3 g-4 text-center mt-0"  >`
     for ( element of items) {
-
-      //  console.log(element);
-     
-        html += `
-        <div class="col-6">
+      html += `
+      <div class="col-6">
         <div class="card">
           <div class="">
-          <img src="${element.image}" class="card-img-top img-thumb" alt="item">
+           <img src="${element.image}" class="card-img-top img-thumb" alt="item">
           </div>
-        <div class="card-footer itemButton" id="${element.id}">
-            <h5 class="card-title">${element.title}</h5>
+          <div class="card-footer itemButton" id="${element.id}">
+           <h5 class="card-title">${element.title}</h5>
           </div>
         </div>
       </div>
         `
-
-       
-       $(padre).html(html) 
-
-       
+         
     }
-      html += `</div>`
+    $(padre).html(html)  
+    html += `</div>`
 
     for (const el of $('.itemButton')) {
       $(el).on('click', () => {
         sessionStorage.setItem("producto",el.id)
         location.href = "#/descriptionItem";
-       
-        })
-      }
-
-
-
+      })
+    }
   }
 
   descripcionItem(padre : string, items:Iproductos, callback : VoidFunction){
-    
-    
-     let html = ""
-     html = `
-        <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
-            <div class=" bg-white col-5 rounded ">
-              <img src="${items.image}" class="card-img-top img-thumb" alt="...">
-            </div>
-            <div class="col-7  container bg-white rounded mx-auto  d-flex flex-column justify-content-around">
-              <h4 class="fs-3 ">${items.title}</h4>
-              <hr class="w-75 mx-auto ">
-              <h2>$ ${items.price}</h2>
-            <hr class="w-75 mx-auto ">
-              <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal" id="addCarrito">Agregar al carrito</button>
-      
-            </div>
-          </div> 
-          `
-
+    let html = ""
+    html = `
+      <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
+        <div class=" bg-white col-5 rounded ">
+         <img src="${items.image}" class="card-img-top img-thumb" alt="...">
+        </div>
+        <div class="col-7  container bg-white rounded mx-auto  d-flex flex-column justify-content-around">
+          <h4 class="fs-3 ">${items.title}</h4>
+          <hr class="w-75 mx-auto ">
+          <h2>$ ${items.price}</h2>
+          <hr class="w-75 mx-auto ">
+          <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#exampleModal" id="addCarrito">Agregar al carrito</button>
+        </div>
+      </div> 
+    `
      $(padre).html(html)
-    
 
     const addCarritoBtn = $('#addCarrito')
-
-      $('#close').on('click',() => {
-        
-      })
-
-      addCarritoBtn.click(callback)
-
-
-
-          //Se agregar el producto al carrito.    
-          // const ObjetoProducto = new Product(items.title,items.image,items.price)
-        
-        
-
-        // carrito.push(ObjetoProducto)
-        // localStorage.setItem("Carrito",JSON.stringify(carrito))
-        // location.href = "#/carrito";
-
-     
-
-
-
-
- 
-
-    
+    addCarritoBtn.click(callback)  
   }
   
   buscar(padre : string,array:Iproductos[]) {
-  
+    let element : Iproductos
+    let html = ""
 
     if(array.length === 0){
       $(padre).html("")
       location.href = "#/error"
     }
-      let element : Iproductos
-   
-    
-      let html = ""
-    
-    
-
-    html = `  <div class=" row  row-cols-md-3 g-4 text-center mt-0"  >`
+  
+    html = `<div class=" row  row-cols-md-3 g-4 text-center mt-0">`
     for ( element of array) {
-
-      //  console.log(element);
-     
-        html += `
+      html += `
         <div class="col-6">
-        <div class="card">
-          <div class="">
-          <img src="${element.image}" class="card-img-top img-thumb" alt="item">
-          </div>
-        <div class="card-footer itemButton" id="${element.id}">
-            <h5 class="card-title">${element.title}</h5>
+          <div class="card">
+            <div class="">
+              <img src="${element.image}" class="card-img-top img-thumb" alt="item">
+            </div>
+            <div class="card-footer itemButton" id="${element.id}">
+              <h5 class="card-title">${element.title}</h5>
+            </div>
           </div>
         </div>
-      </div>
-        `
-
-       
-       $(padre).html(html) 
-
-       
+      `
     }
-      html += `</div>`
+    $(padre).html(html)  
+    html += `</div>`
     
 
- for (const el of $('.itemButton')) {
+    for (const el of $('.itemButton')) {
       $(el).on('click', () => {
         sessionStorage.setItem("producto",el.id)
         location.href = "#/descriptionItem";
-       
-        })
-      }
+      })
+    }
 
-    //  $(padre).html("")
+        //  $(padre).html("")
   }
 }
-
 
   class ProductController {
     productoModel: ProductModel;
@@ -404,66 +279,46 @@ payment.on('click',() =>{
       this.productoModel = productoModel
       this.productoView = productoVista
 
-        this.func  = ()  => {
-          $('#form').on('submit',(e) =>{
+      this.func  = ()  => {
+        $('#form').on('submit',(e) =>{
           e.preventDefault() 
-       
-            const searchTerm : string | number | string[] | undefined = $('#exampleDataList').val()
-
-            if (searchTerm && searchTerm !== ''){
-              // location.reload()
-              sessionStorage.setItem("palabra",String(searchTerm))
-                console.log(parseLocation());
-              location.href = "#/buscar=" + searchTerm
-             
-            
-            }
+          const searchTerm : string | number | string[] | undefined = $('#exampleDataList').val()
+          if (searchTerm && searchTerm !== ''){
+            sessionStorage.setItem("palabra",String(searchTerm))
+            location.href = "#/buscar=" + searchTerm
+          }
         })
-
-
-  }
+      }
       
     }
 
     irInicio(app : string,data : Idata){
-      // this.func()
       this.productoView.home(app,data,this.func())   
-     
-   
     }
 
     irCarrito(app:string){
-      // let deleteNumber : number = parseInt(sessionStorage.getItem("delete")!)
-
-        let Carro = new Carrito(this.productoModel.carrito)
-        // this.func()
+      let Carro = new Carrito(this.productoModel.carrito)
       this.productoView.carrito(app,this.productoModel.carrito,Carro,() =>{
         this.productoModel.eliminarProducto()
       })
     }
 
     irProductos(app : string, data : Idata) {
-      // this.func()
       this.productoView.productos(app,data)
     }
 
     irDescripcionItem(app : string, data : Idata) {
- let pNumber : number = parseInt(sessionStorage.getItem("producto")!)
-     let iNumber : number = parseInt(sessionStorage.getItem("item")!)
-     let items = data!.title[iNumber].Productos[pNumber]
-    // this.func()
+      let pNumber : number = parseInt(sessionStorage.getItem("producto")!)
+      let iNumber : number = parseInt(sessionStorage.getItem("item")!)
+      let items = data!.title[iNumber].Productos[pNumber]
       this.productoView.descripcionItem(app,items,() => {
         this.productoModel.agregarProducto(items)
       })
     }
 
     irBuscar(app : string,data : Idata){
-      // this.func()
-     
       this.productoView.buscar(app,this.productoModel.searchProducto(data,sessionStorage.getItem("palabra")!))
     }
-
-    
-  }
+}
 
  
