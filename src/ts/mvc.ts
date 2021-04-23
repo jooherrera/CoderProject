@@ -13,6 +13,8 @@ class ProductModel {
 
   guardarProducto() {
     localStorage.setItem("Carrito",JSON.stringify(this.carrito))
+    location.href = "#/carrito"
+   
   }
 
   agregarProducto(producto : Iproducts) {
@@ -45,6 +47,21 @@ class ProductModel {
      
    
   }
+
+  eliminarProducto(){
+     let deleteNumber : number = parseInt(sessionStorage.getItem("delete")!)
+     console.log(deleteNumber);
+
+    this.carrito = this.carrito.filter((_producto,idx) => {
+     return idx != deleteNumber
+    
+    })
+
+    console.table(this.carrito);
+    this.guardarProducto()
+     location.reload()
+  }
+
 } 
 
 
@@ -96,6 +113,7 @@ class ProductVista {
          
           break;
         default:
+           location.href = "#/construccion";
           break;
       }
     });
@@ -118,7 +136,7 @@ class ProductVista {
 
   };
 
-  carrito(padre : string,carrito : Iproducts[],Carro : Carrito){
+  carrito(padre : string,carrito : Iproducts[],Carro : Carrito, callbackDelete : VoidFunction ){
     let element : Iproducts
 if (!carrito){
   $(padre).html("")
@@ -127,6 +145,7 @@ if (!carrito){
 
 
     for ( element of carrito) {
+      // console.log(carrito.indexOf(element));
       html +=  `
         <div class="container m-auto row text-center mt-5 bg-white p-3 border-custom">
             <div class=" bg-white col-5 rounded ">
@@ -136,12 +155,21 @@ if (!carrito){
               <h4 class="fs-3 ">${element.title}</h4>
               <hr class="w-75 mx-auto ">
               <h2>$ ${element.price}</h2>
+              <button class="btnDelete" id="${carrito.indexOf(element)}"> 
+              <i class="fas fa-times-circle text-danger fs-1" ></i>
+              </button>
             </div>
           </div> 
           `
        
     }
     $(padre).html(html)
+
+    $(padre).append(`
+     <div class="container my-5 text-center" >
+      <button class="btn btn-primary fs-4 fw-bold" id="seguirComprando"><i class="fas fa-chevron-left"></i> SEGUIR COMPRANDO <i class="fas fa-chevron-right"></i></button>
+      </div>
+    `)
 
     $(padre).append(`
     <div class="container mb-5" id="contentPagar" >
@@ -151,25 +179,54 @@ if (!carrito){
           <hr class="w-75 mx-auto">
           <h2>$${Carro.total}</h2>
           <hr class="w-75 mx-auto">
-          <button class="btn btn-primary w-100"  data-bs-toggle="modal" data-bs-target="#exampleModal" id="payment" >Pagar</button>
+          <button class="btn btn-success fs-3 w-100"  data-bs-toggle="modal" data-bs-target="#exampleModalPayment" id="payment" >Pagar</button>
         </div>
       </div>
     </div>
     `)
 
+$('#seguirComprando').on('click',()=>{
+  window.history.go(-2)
+})
+
+
+ for (const element of $(".btnDelete")) {
+   
+     $(element).on('click',() => {
+     sessionStorage.setItem("delete",element.id)
+     console.log(element.id);
+     callbackDelete()
+  })
+
+      
+    
+   
+  }
+
+  
+
+  // $('.btnDelete').click(callbackDelete)
+
+
+
+
+
  $('#close').on('click',() => {
+ location.href = "#/home"
         location.reload()
       })
 
 const payment = $('#payment')
 if(Carro.total > 0){
 payment.on('click',() =>{
+  
     return Carro.pagar
  })
 }else{
   payment.css({
     display : "none"
   })
+  
 }
 
 
@@ -376,9 +433,13 @@ payment.on('click',() =>{
     }
 
     irCarrito(app:string){
+      // let deleteNumber : number = parseInt(sessionStorage.getItem("delete")!)
+
         let Carro = new Carrito(this.productoModel.carrito)
         // this.func()
-      this.productoView.carrito(app,this.productoModel.carrito,Carro)
+      this.productoView.carrito(app,this.productoModel.carrito,Carro,() =>{
+        this.productoModel.eliminarProducto()
+      })
     }
 
     irProductos(app : string, data : Idata) {

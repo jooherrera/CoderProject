@@ -35,11 +35,29 @@ const routes : Iroutes[] = [
 
 
 const ErrorComponent = (padre : string) => {
-    $(padre).html("<h2>No se ha encontrado elementos</h2>");
+  let html : string = ""
+  html = `
+    <div class="w-100 h-100 text-center mt-5">
+<i class="fas fa-times-circle size text-danger"></i>
+    <p class="fs-3 fw-bold">
+      No se han encontrado elementos!
+    </p>
+  </div>>
+  `
+    $(padre).html(html);
   }
 
 const ErrorComponentConstruccion = (padre : string) => {
-    $(padre).html("<h2>Sitio bajo construccion</h2>");
+ let html : string = ""
+ 
+  html += `
+  <div class="w-100 mt-5">
+  <img src="./assets/images/error.png" class="image-construccion" alt="error">
+</div>
+
+  `
+ $(padre).html(html);
+
   }
 
 const parseLocation = () => location.hash.slice(1).toLowerCase() || '/';
