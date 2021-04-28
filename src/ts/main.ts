@@ -1,6 +1,7 @@
 $(() => {
   loadItems(jsonURL).then(res => {
     router(res!)
+     sessionStorage.setItem("item", "0");
   })
 });
 
