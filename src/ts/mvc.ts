@@ -92,7 +92,7 @@ class ProductVista {
     }
   };
 
-  carrito(padre : string,carrito : Iproducts[],Carro : Carrito, callbackDelete : VoidFunction ){
+  carrito(padre : string,carrito : Iproducts[],Carro : Carrito, callbackDelete : VoidFunction,_callback : void ){
     let element : Iproducts
    
     if (!carrito){
@@ -300,7 +300,7 @@ class ProductVista {
       let Carro = new Carrito(this.productoModel.carrito)
       this.productoView.carrito(app,this.productoModel.carrito,Carro,() =>{
         this.productoModel.eliminarProducto()
-      })
+      },this.func())
     }
 
     irProductos(app : string, data : Idata) {
